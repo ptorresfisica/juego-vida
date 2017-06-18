@@ -1,0 +1,24 @@
+BIN = bin.macos
+SDL = SDL2.framework
+
+CXX = g++
+INCLUDES =
+CXXFLAGS = -pipe -O2 -Wall -Wextra -std=c++0x $(INCLUDES)
+LFLAGS = -O2
+LIBS = /Library/Frameworks/$(SDL)/SDL2
+
+RMFILE = rm -f
+
+TARGET = $(BIN)/Life
+OBJECTS = main.o game.o grid.o
+
+all: $(TARGET)
+
+clean:
+	$(RMFILE) $(TARGET) *.o
+
+$(TARGET): $(OBJECTS)
+	$(CXX) $(LFLAGS) -o $@ $^ $(LIBS)
+
+%.o: src/%.cpp
+	$(CXX) $(CXXFLAGS) -c -o $@ $<

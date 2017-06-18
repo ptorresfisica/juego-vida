@@ -1,0 +1,24 @@
+BIN = bin.windows
+SDL = i686-w64-mingw32
+
+CXX = g++
+INCLUDES = -I$(SDL)/include
+CXXFLAGS = -pipe -O2 -Wall -Wextra -std=c++0x $(INCLUDES)
+LFLAGS = -O2 -L$(SDL)/lib
+LIBS = -lmingw32 -lSDL2main -lSDL2
+
+RMFILE = del
+
+TARGET = $(BIN)/life.exe
+OBJECTS = main.o game.o grid.o
+
+all: $(TARGET)
+
+clean:
+	$(RMFILE) $(TARGET) *.o
+
+$(TARGET): $(OBJECTS)
+	$(CXX) $(LFLAGS) -o $@ $^ $(LIBS)
+
+%.o: src/%.cpp
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
